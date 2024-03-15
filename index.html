@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Крестики-нолики</title>
+    <link rel="stylesheet" href="./style/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
+    <script src="https://yandex.ru/games/sdk/v2"></script>
+    <!-- Yandex Games SDK -->
+
+</head>
+
+<body>
+    <script>
+        YaGames
+            .init()
+            .then(ysdk => {
+                console.log('Yandex SDK initialized');
+                window.ysdk = ysdk;
+            });
+        ysdk.getLeaderboards()
+            .then(lb => lb.getLeaderboardDescription('userPoints'))
+            .then(res => console.log(res));
+    </script>
+    <div>
+        <h1 id="counter_container"></h1>
+        <h1 id="message_container"></h1>
+    </div>
+    <div id="mode_container">
+        <label class="switch">
+            <input type="checkbox" id="mode_switch" onclick="toggleMode()">
+            <span class="slider round"></span>
+        </label>
+        <label id="mode_message_container" for="mode_switch">Игра с роботом</label>
+    </div>
+    <div class="board" onclick="cellClicked(event)">
+        <div class="cell" data-index="0"></div>
+        <div class="cell" data-index="1"></div>
+        <div class="cell" data-index="2"></div>
+        <div class="cell" data-index="3"></div>
+        <div class="cell" data-index="4"></div>
+        <div class="cell" data-index="5"></div>
+        <div class="cell" data-index="6"></div>
+        <div class="cell" data-index="7"></div>
+        <div class="cell" data-index="8"></div>
+    </div>
+    <div class="btn-group">
+        <button id="restart_button" onclick="restartGame()">Начать сначала</button>
+        <a href="https://vk.com/shubnechkin_dev" target="_blank">
+            <button id="group_button">Мы в Вконтакте</button>
+        </a>
+        <a href="https://yandex.ru/games/developer/81905" target="_blank">
+            <button id="more_button">Другие игры</button>
+        </a>
+    </div>
+    <script src="./js/main.js"></script>
+</body>
+
+</html>
