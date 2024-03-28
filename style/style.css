@@ -1,254 +1,396 @@
 body {
-    height: 100vh;
-    margin: 0;
-    overflow: hidden;
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    text-align: center;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    flex-direction: column;
-    background-color: #ffcc66;
-    /* Яркий оранжевый */
-    /* Цвет фона для body */
-    font-family: 'Comic Sans MS', cursive;
-    /* Выбранный шрифт */
-    box-shadow: 0 4px 6px hsla(0, 0%, 0%, 0.102);
-    /* Добавляем тень */
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  text-align: center;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  flex-direction: column;
+  background-color: #ffcc66;
+  /* Яркий оранжевый */
+  /* Цвет фона для body */
+  font-family: "Comic Sans MS", cursive;
+  /* Выбранный шрифт */
+  box-shadow: 0 4px 6px hsla(0, 0%, 0%, 0.102);
+  /* Добавляем тень */
 }
 
 .board {
-    display: grid;
-    grid-template-columns: repeat(3, 100px);
-    grid-template-rows: repeat(3, 100px);
-    gap: 2px;
-    margin: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  grid-template-rows: repeat(3, 100px);
+  gap: 2px;
+  margin: auto;
 }
 
 #counter_container span {
-    transform: translate(-50%, -50%);
-    padding: 10px 20px;
-    font-size: 1.5em;
-    background-color: #ffffff;
-    /* Цвет подложки */
-    border-radius: 20px;
-    /* Скругление углов */
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    /* Тень */
-    border: 4px solid;
+  transform: translate(-50%, -50%);
+  padding: 10px 20px;
+  font-size: 1.5em;
+  background-color: #ffffff;
+  /* Цвет подложки */
+  border-radius: 20px;
+  /* Скругление углов */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  /* Тень */
+  border: 4px solid;
 }
 
 .cell {
-    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
-    margin: 4px;
-    background-color: #ffffff;
-    border: 4px solid grey;
-    display: flex;
-    border-radius: 10px;
-    align-items: center;
-    justify-content: center;
-    font-size: 3em;
-    transition: background-color 0.3s ease;
-    -webkit-transition: background-color 0.3s ease;
-    -moz-transition: background-color 0.3s ease;
-    -ms-transition: background-color 0.3s ease;
-    -o-transition: background-color 0.3s ease;
+  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
+  margin: 4px;
+  background-color: #ffffff;
+  border: 4px solid grey;
+  display: flex;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+  font-size: 3em;
+  transition: background-color 0.3s ease;
+  -webkit-transition: background-color 0.3s ease;
+  -moz-transition: background-color 0.3s ease;
+  -ms-transition: background-color 0.3s ease;
+  -o-transition: background-color 0.3s ease;
+}
+
+/* Стили для закрашивания выигрышных комбинаций */
+
+/* Горизонтальные и вертикальные линии */
+.winning-cell.horizontal-cross,
+.winning-cell.horizontal-circle,
+.winning-cell.vertical-cross,
+.winning-cell.vertical-circle {
+  position: relative;
+}
+
+.winning-cell.horizontal-cross::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 45%;
+  height: 4px; /* Толщина линии */
+  border-top: 3px solid rgb(153, 232, 252);
+  border-bottom: 3px solid rgb(153, 232, 252);
+  background-color: #6bd5ff; /* Цвет линии для крестика */
+  transform: translateY(5%);
+}
+
+.winning-cell.horizontal-circle::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 45%;
+  height: 4px; /* Толщина линии */
+  border-top: 3px solid lightsalmon;
+  border-bottom: 3px solid lightsalmon;
+  background-color: #ff6b6b;
+  transform: translateY(-5%);
+}
+
+/* Вертикальные линии */
+.winning-cell.vertical-circle::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  bottom: 0;
+  width: 4px; /* Толщина линии */
+  height: auto;
+  border-left: 3px solid lightsalmon;
+  border-right: 3px solid lightsalmon;
+  background-color: #ff6b6b;
+  transform: translateX(-50%);
+}
+
+.winning-cell.vertical-cross::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  bottom: 0;
+  width: 4px; /* Толщина линии */
+  height: auto;
+  border-left: 3px solid rgb(153, 232, 252);
+  border-right: 3px solid rgb(153, 232, 252);
+  background-color: #6bd5ff; /* Цвет линии для крестика */
+  transform: translateX(-50%);
+}
+
+/* Диагональные линии (слева направо) */
+.winning-cell.diagonal-left-circle,
+.winning-cell.diagonal-left-cross {
+  position: relative;
+}
+
+.winning-cell.diagonal-left-cross::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 45%;
+  bottom: 0;
+  border: 3px solid rgb(153, 232, 252);
+  background-color: #6bd5ff;
+  border-radius: 10px;
+  height: 4px; /* Толщина линии */
+  transform: rotate(-45deg); /* Поворот на 45 градусов */
+  transform-origin: center center;
+}
+
+.winning-cell.diagonal-left-circle::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 45%;
+  bottom: 0;
+  border: 3px solid lightsalmon;
+  background-color: #ff6b6b;
+  border-radius: 10px;
+  height: 4px; /* Толщина линии */
+  transform: rotate(-45deg); /* Поворот на 45 градусов */
+  transform-origin: center center;
+}
+
+/* Диагональные линии (справа налево) */
+.winning-cell.diagonal-right-cross,
+.winning-cell.diagonal-right-circle {
+  position: relative;
+}
+
+.winning-cell.diagonal-right-cross::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 45%;
+  bottom: 0;
+  height: 4px; /* Толщина линии */
+  border-radius: 10px;
+  border: 3px solid rgb(153, 232, 252);
+  background-color: #6bd5ff;
+  transform: rotate(45deg); /* Поворот на -45 градусов */
+  transform-origin: center center;
+}
+
+.winning-cell.diagonal-right-circle::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 45%;
+  bottom: 0;
+  border-radius: 10px;
+  height: 4px; /* Толщина линии */
+  border: 3px solid lightsalmon;
+  background-color: #ff6b6b;
+  border-radius: 10px;
+  transform: rotate(45deg); /* Поворот на -45 градусов */
+  transform-origin: center center;
 }
 
 #message_container {
-    text-align: center;
-    margin-bottom: 10px;
+  text-align: center;
+  margin-bottom: 10px;
 }
 
 #restart_button {
-    display: block;
-    margin: auto;
-    padding: 10px 20px;
-    font-size: 1em;
-    cursor: pointer;
-    background-color: #ff6b6b;
-    /* Цвет фона кнопки */
-    color: #fff;
-    /* Цвет текста кнопки */
-    border: none;
-    /* Убираем границу кнопки */
-    border-radius: 50px;
-    /* Скругляем углы кнопки */
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    /* Тень кнопки */
-    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-    /* Анимация при наведении */
+  display: block;
+  margin: auto;
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+  background-color: #ff6b6b;
+  /* Цвет фона кнопки */
+  color: #fff;
+  /* Цвет текста кнопки */
+  border: none;
+  /* Убираем границу кнопки */
+  border-radius: 50px;
+  /* Скругляем углы кнопки */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  /* Тень кнопки */
+  transition: background-color 0.3s ease, transform 0.3s ease,
+    box-shadow 0.3s ease;
+  /* Анимация при наведении */
 }
 
 #restart_button:hover {
-    background-color: #ff6e99;
-    /* Цвет кнопки при наведении */
-    transform: scale(1.05);
-    /* Увеличиваем размер кнопки */
-    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
-    /* Увеличиваем тень */
+  background-color: #ff6e99;
+  /* Цвет кнопки при наведении */
+  transform: scale(1.05);
+  /* Увеличиваем размер кнопки */
+  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
+  /* Увеличиваем тень */
 }
 
 #restart_button:active {
-    transform: scale(0.95);
-    /* Уменьшаем размер кнопки при нажатии */
-    box-shadow: none;
-    /* Убираем тень при нажатии */
+  transform: scale(0.95);
+  /* Уменьшаем размер кнопки при нажатии */
+  box-shadow: none;
+  /* Убираем тень при нажатии */
 }
 
-
 #mode_container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
-    margin-right: 12px;
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  margin-right: 12px;
 }
 
 .switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
+  opacity: 0;
+  width: 0;
+  height: 0;
 }
 
 .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    transition: .4s;
-    border-radius: 34px;
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
 }
 
 .slider:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    transition: .4s;
-    border-radius: 50%;
-
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
 }
 
-input:checked+.slider {
-    background-color: #2196F3;
+input:checked + .slider {
+  background-color: #2196f3;
 }
 
-input:focus+.slider {
-    box-shadow: 0 0 1px #2196F3;
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196f3;
 }
 
-input:checked+.slider:before {
-    transform: translateX(26px);
+input:checked + .slider:before {
+  transform: translateX(26px);
 }
 
 .slider.round {
-    border-radius: 34px;
+  border-radius: 34px;
 }
 
 .slider.round:before {
-    border-radius: 50%;
+  border-radius: 50%;
 }
 
 .closed {
-    cursor: not-allowed;
+  cursor: not-allowed;
 }
 
 .pointer {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .cross {
-    color: #6bd5ff;
+  color: #6bd5ff;
 }
 
 .circle {
-    color: #ff6b6b;
+  color: #ff6b6b;
 }
 
 .cross,
 .circle {
-    opacity: 0;
-    animation: appear 0.3s ease forwards;
+  opacity: 0;
+  animation: appear 0.3s ease forwards;
 }
 
 .btn-group {
-    display: flex;
-    justify-content: space-around;
-    margin: 20px;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  justify-content: space-around;
+  margin: 20px;
+  align-items: center;
+  gap: 10px;
 }
 
 .btn-group button {
-    padding: 10px 20px;
-    font-size: 1em;
-    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-    border: none;
-    border-radius: 50px;
-    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-    -webkit-transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-    -moz-transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-    -ms-transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-    -o-transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 10px 20px;
+  font-size: 1em;
+  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  border: none;
+  border-radius: 50px;
+  transition: background-color 0.3s ease, transform 0.3s ease,
+    box-shadow 0.3s ease;
+  -webkit-transition: background-color 0.3s ease, transform 0.3s ease,
+    box-shadow 0.3s ease;
+  -moz-transition: background-color 0.3s ease, transform 0.3s ease,
+    box-shadow 0.3s ease;
+  -ms-transition: background-color 0.3s ease, transform 0.3s ease,
+    box-shadow 0.3s ease;
+  -o-transition: background-color 0.3s ease, transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .btn-group button:hover {
-    background-color: #ff6e99;
-    /* Цвет кнопки при наведении */
-    transform: scale(1.05);
-    /* Увеличиваем размер кнопки */
-    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
-    /* Увеличиваем тень */
+  background-color: #ff6e99;
+  /* Цвет кнопки при наведении */
+  transform: scale(1.05);
+  /* Увеличиваем размер кнопки */
+  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
+  /* Увеличиваем тень */
 }
 
 .btn-group button:active {
-    transform: scale(0.95);
-    /* Уменьшаем размер кнопки при нажатии */
-    box-shadow: none;
-    /* Убираем тень при нажатии */
+  transform: scale(0.95);
+  /* Уменьшаем размер кнопки при нажатии */
+  box-shadow: none;
+  /* Убираем тень при нажатии */
 }
 
 #group_button {
-    background-color: #3b5998;
-    /* Цвет фона кнопки */
-    color: #fff;
-    /* Цвет текста кнопки */
+  background-color: #3b5998;
+  /* Цвет фона кнопки */
+  color: #fff;
+  /* Цвет текста кнопки */
 }
 
 #more_button {
-    background-color: #4caf50;
-    /* Цвет фона кнопки */
-    color: #fff;
-    /* Цвет текста кнопки */
+  background-color: #4caf50;
+  /* Цвет фона кнопки */
+  color: #fff;
+  /* Цвет текста кнопки */
 }
 
 @keyframes appear {
-    from {
-        opacity: 0;
-        transform: scale(0.5);
-    }
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
 
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
